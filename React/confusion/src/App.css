@@ -1,0 +1,95 @@
+html {
+    font-size: 14px;
+  }
+  
+  .logo {
+    max-width: 10rem;
+    margin-right: 1rem;
+  }
+  
+  .logo img {
+    max-width: inherit;
+  }
+  
+  .img-check {
+    float: right;
+  }
+  
+  
+  .navbar-dark {
+    background-color: #df1515;
+  }
+  
+  
+  .search-box  input{
+    width: 300px;
+    height: 27px;
+    background: #ffffff;
+    border: none;
+    padding: 0 10px;
+    margin-left: 20px;
+    color: #000000;
+    font-size: 12px;
+  }
+  .header {
+    background: #2E577B;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #b40d0d;
+  
+  }
+  .caption {
+    display: block;
+  }
+  .header>div {
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+  
+  
+  
+  .big-bg
+  {
+    background-image: url('./login-diarium.png');
+    background-size: cover;
+    height: calc(100vh - 69px);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-self: left;
+    margin-top: 2px;
+    width:100%; 
+  }
+  
+  
+  .jumbotron {
+      padding: 2rem 1rem;
+      margin-bottom: 2rem;
+      background-color: #ffffff;
+      border-radius: .3rem;
+      color: #b40d0d;
+  }
+  
+  
+  .half-width
+  {
+    width: 50vw;
+    /* padding: 1rem; */
+    display: flex;
+    flex-direction: column;
+    margin-left: 2px;
+  
+  }
+  .white-bg
+  {
+    background: #fff;
+  }
+  .right-btn
+  {
+    align-self: flex-start;
+  }
+  
+  
