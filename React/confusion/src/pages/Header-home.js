@@ -105,7 +105,7 @@ class HeaderHome extends Component {
           const requestOptions = {
               method: 'POST',
               headers: new Headers(httpHeaders),
-              body: JSON.stringify({ title: this.activityTitle, description: this.activityTitle })
+              body: JSON.stringify({ title: this.activityTitle, description: this.activityDesc })
       
           };
     
@@ -194,8 +194,40 @@ class HeaderHome extends Component {
     }
 
     handleCheckOut(event){
-        this.toggleModalEditAnRemoveActivity();
-        alert("Anda Sudah Berhasil Check Out");
+        //this.toggleModalEditAnRemoveActivity();
+        this.toggleModalLocationCheckOut();
+        const httpHeaders = { 
+            'Content-Type' : 'application/json', 
+            'Accept' : 'application/json',
+            'Authorization' : `Bearer ${localStorage.getItem('token')}`
+          }
+
+          const requestOptions = {
+              method: 'POST',
+              headers: new Headers(httpHeaders),
+              body: JSON.stringify({ check_in: 1, condition: this.state.condition, workplace: this.state.location })
+      
+          };
+    
+        fetch("api/activities/checkout",requestOptions)
+        .then(res=>res.clone().json())
+        .then( json => {
+          if(json.status===200){
+            console.log(json)
+            this.setState({isCheckIn: false})
+            alert("Anda Sudah Berhasil Check Out");
+          }
+          if(json.message){
+            alert(json.message);
+          }
+        else if(json)
+          return false
+        }).catch(err => {
+            console.error(err)
+            console.log(err.message)
+        });
+
+        
         event.preventDefault();
     }
 
@@ -229,7 +261,7 @@ class HeaderHome extends Component {
                     </Form>
                     </NavbarBrand>
                     <NavbarToggler onClick={this.toggleModal} />
-                    <NavbarBrand className="mr-auto"  onClick={this.toggleModal} >
+                    <NavbarBrand className="mr-auto"  onClick={this.state.isCheckIn ? this.toggleModalCheckOut : this.toggleModal} >
                                 <span className="fa-check-square-o "></span>{this.state.isCheckIn ? 'Check Out' : 'Check In' }
                     </NavbarBrand>
                     <NavbarBrand className="mr-auto"  onClick={this.toggleModalAddActivity} >
@@ -307,12 +339,12 @@ class HeaderHome extends Component {
                     <Form >
                         <center>
                             <a onClick={this.toggleModalLocationCheckOut}>
-                                <img  value="sehat" border="0" alt="Sehat" src="public/assets/images/sehat.png" width="100" height="100"/>
+                                <img onClick={() => this.setCondition('sehat')} value="sehat"  border="0" alt="Sehat" src="public/assets/images/sehat.png" width="100" height="100"/>
                                     <span className="caption">Sehat</span>                                
-                                <img border="0" alt="Kurang Sehat" src="public/assets/images/kurang-sehat.png" width="100" height="100"/>
+                                <img onClick={() => this.setCondition('kurang sehat')} border="0" alt="Kurang Sehat" src="public/assets/images/kurang-sehat.png" width="100" height="100"/>
                                     <span className="caption">Kurang Sehat</span>                                
-                                <img border="0" alt="Sakit" src="public/assets/images/sakit.png" width="100" height="100"/>
-                                    <span className="caption">Sakit</span>                                
+                                <img onClick={() => this.setCondition('sakit')} border="0" alt="Sakit" src="public/assets/images/sakit.png" width="100" height="100"/>
+                                    <span className="caption">Sakit</span>
                             </a>
                         </center>
                
@@ -324,12 +356,12 @@ class HeaderHome extends Component {
                 <ModalBody>
                     <Form >
                         <center>
-                            <a onClick={this.toggleModalEditAnRemoveActivity}>
-                                <img  value="sehat" border="0" alt="Office" src="public/assets/images/office.png" width="100" height="100"/>
+                            <a onClick={this.handleCheckOut}>
+                                <img onClick={() => this.setLocation('wfo')} value="sehat" border="0" alt="Office" src="public/assets/images/office.png" width="100" height="100"/>
                                     <span className="caption">Office</span>                                
-                                <img border="0" alt="Home" src="public/assets/images/home.png" width="100" height="100"/>
+                                <img onClick={() => this.setLocation('wfh')} border="0" alt="Home" src="public/assets/images/home.png" width="100" height="100"/>
                                     <span className="caption">Home</span>                                
-                                <img border="0" alt="Satelit" src="public/assets/images/satelit.png" width="100" height="100"/>
+                                <img onClick={() => this.setLocation('wfs')} border="0" alt="Satelit" src="public/assets/images/satelit.png" width="100" height="100"/>
                                     <span className="caption">Satelit</span>                                
                             </a>
                         </center>
