@@ -1,22 +1,34 @@
 import React, {Component} from 'react';
 import { Button, Modal, ModalHeader, ModalBody, FormGroup,
   Form, Label, Input} from 'reactstrap';
-import { useHistory } from 'react-router-dom';
 
-import  { Redirect } from 'react-router-dom'
+import { history } from '../helpers';
+// import { useHistory } from 'react-router-dom';
 
+// import  { Redirect } from 'react-router-dom'
+
+// import /* APIKit, */ {setClientToken} from '../shared/APIKit';
+
+const initialState = {
+  username: '',
+  password: '',
+  errors: {},
+  isAuthorized: false,
+  isLoading: false,
+};
 
 class Login extends Component {
   constructor(props){
     super(props);
-    this.state = {
+    this.state = initialState
+    this.setState ({
         isModalOpen: false
-    }
+    })
     this.toggleModal = this.toggleModal.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
     this.handleSignup = this.handleSignup.bind(this);
 
-  }    
+  }
 
   toggleModal() {
     this.setState({
@@ -26,11 +38,57 @@ class Login extends Component {
 
 
   handleLogin(event){
-
-    alert("Success");
     event.preventDefault()
-    this.props.history.push('/home')
+    const {username, password} = this.state;
+    const payload = {username, password};
+    console.log('payload = ')
+    console.log(payload);
 
+    /* const onSuccess = ({data}) => {
+      // Set JSON Web Token on success
+      setClientToken(data.token);
+      console.log('login successful')
+      console.log(data)
+      this.setState({isLoading: false, isAuthorized: true});
+    }; */
+
+    /* const onFailure = error => {
+      console.log(error && error.response);
+      console.log('login failed')
+      console.log(error)
+      this.setState({errors: error, isLoading: false});
+    }; */
+
+    // Show spinner when call is made
+    this.setState({isLoading: true});
+
+    
+    fetch('/api/users/login', {  method: 'POST', 
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ username: this.state.username, password: this.state.password })})
+      .then((res) => {
+        // return res.json()
+        return res
+    })
+    .then((json) => {
+      // Do something with the returned data.
+      console.log(json.result);
+      /* if(json.status===200)
+        localStorage.setItem("user", json.result);
+      else if(json)
+        return false */
+    });
+
+    //axios rollback
+    /* APIKit.post('/users/login', payload, {
+      headers: { 
+      "Content-Type": "application/x-www-form-urlencoded"
+    }, mode: 'no-cors'})
+      .then(onSuccess)
+      .catch(onFailure); */
+
+    /* alert("Success");
+    this.props.history.push('/home') */
   }
 
   handleSignup(event){
@@ -39,6 +97,18 @@ class Login extends Component {
     event.preventDefault();
 
   }
+
+  onUsernameChange = username => {
+    //console.log(username.target.value);
+    this.setState({username: username.target.value});
+    console.log(username.target.value)
+    console.log('state username')
+    console.log(this.state.username)
+  };
+
+  onPasswordChange = password => {
+    this.setState({password: password.target.value});
+  };
 
   render() {
     return (
@@ -52,9 +122,9 @@ class Login extends Component {
           <Form onSubmit={this.handleLogin}>
              <center>
                <div>
-                  <img alt="" src="assets/images/logo-diarium-new.png" width="200px" align-self="center">
+                  <img alt="" src="assets/images/logo-diarium-new.png" width="150px" align-self="center">
                   </img>
-                  <p className="text-center">Diarium Next Version  </p>               
+                  <p className="text-center">Diarium Next Generation - Team VSCode</p>
                 </div>
             </center>
             <FormGroup>
@@ -63,7 +133,7 @@ class Login extends Component {
                       <img alt="" src="assets/images/username.png" width="16px">
                       </img>
                     </span>
-                  <Input type="text" id="username" name="username"  innerRef={(input) => this.nik = input}/>
+                  <Input type="text" id="username" name="username" onChange={(e) => this.setState({ username : e.target.value })}  innerRef={(input) => this.setState ( {username : input})}/>
                 </FormGroup>
                 <FormGroup>
                   <Label htmlFor="password">Password</Label>
@@ -71,7 +141,7 @@ class Login extends Component {
                       <img alt="" src="assets/images/password-red.png" width="16px">
                       </img>
                      </span>
-                  <Input type="text" id="password" name="password"  innerRef={(input) => this.password = input}/>
+                  <Input type="password" id="password" name="password" onChange={(e) => this.setState({ password : e.target.value })} innerRef={(input) => this.setState({ password : input }) }/>
                 </FormGroup>
                 <FormGroup check>
                     <Label check>
@@ -80,7 +150,7 @@ class Login extends Component {
                                 Remember Me
                     </Label>
                 </FormGroup>
-            <Button type="submit" value="submit"color="primary" className="bg-primary pull-right"          
+            <Button type="submit" value="submit"color="primary" className="bg-danger btn-block mt-2 mb-2"          
              style={{ marginright: "auto" }} >Login</Button>
            <div>
               <Label>
@@ -131,4 +201,5 @@ class Login extends Component {
   }
 }
 
-export default Login;
+//export default Login;
+export { Login }

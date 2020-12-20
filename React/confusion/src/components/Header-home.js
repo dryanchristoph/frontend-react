@@ -51,7 +51,6 @@ class HeaderHome extends Component {
         this.setState({
             isModalOpenLocation: !this.state.isModalOpenLocation,
             isModalOpen: false
-
         })
     }
     toggleModalLocationCheckOut() {
@@ -74,13 +73,15 @@ class HeaderHome extends Component {
 
 
     handleCheckin(event){
-        this.toggleModalAddActivity();
+        this.toggleModalLocation();
+        console.log(this.condition)
+        console.log(this.location)
         alert("Anda Sudah Berhasil Checkin");
         event.preventDefault();
     }
 
     handleCheckOut(event){
-        this.toggleModalEditAnRemoveActivity();
+        this.toggleModalLocation();
         alert("Anda Sudah Berhasil Check Out");
         event.preventDefault();
     }
@@ -92,7 +93,7 @@ class HeaderHome extends Component {
                 <div className="container">
                     <NavbarToggler onClick={this.toggleNav} />
                     <NavbarBrand className="mr-auto" href="/">
-                    <img src="assets/images/logo.png" height="30" width="150"
+                    <img src="assets/images/logo.png" height="30"
                             alt="Diarium" />
                     </NavbarBrand>
                     <NavbarBrand className="mr-auto" href="/">
@@ -117,11 +118,11 @@ class HeaderHome extends Component {
                     <Form >
                         <center>
                             <a onClick={this.toggleModalLocation}>
-                                <img  value="sehat" border="0" alt="Sehat" src="assets/images/sehat.png" width="100" height="100"/>
+                                <img onClick={this.condition='sehat' } value="sehat" border="0" alt="Sehat" src="assets/images/sehat.png" width="100" height="100"/>
                                     <span className="caption">Sehat</span>                                
-                                <img border="0" alt="Kurang Sehat" src="assets/images/kurang-sehat.png" width="100" height="100"/>
+                                <img onClick={this.condition='kurang sehat'} border="0" alt="Kurang Sehat" src="assets/images/kurang-sehat.png" width="100" height="100"/>
                                     <span className="caption">Kurang Sehat</span>                                
-                                <img border="0" alt="Sakit" src="assets/images/sakit.png" width="100" height="100"/>
+                                <img onClick={this.condition='sakit'} border="0" alt="Sakit" src="assets/images/sakit.png" width="100" height="100"/>
                                     <span className="caption">Sakit</span>                                
                             </a>
                         </center>
@@ -134,12 +135,12 @@ class HeaderHome extends Component {
                 <ModalBody>
                     <Form >
                         <center>
-                            <a onClick={this.toggleModalAddActivity}>
-                                <img  value="sehat" border="0" alt="Office" src="assets/images/office.png" width="100" height="100"/>
+                            <a onClick={this.handleCheckin}>
+                                <img onClick={this.location='wfo'} value="sehat" border="0" alt="Office" src="assets/images/office.png" width="100" height="100"/>
                                     <span className="caption">Office</span>                                
-                                <img border="0" alt="Home" src="assets/images/home.png" width="100" height="100"/>
+                                <img onClick={this.location='wfh'} border="0" alt="Home" src="assets/images/home.png" width="100" height="100"/>
                                     <span className="caption">Home</span>                                
-                                <img border="0" alt="Satelit" src="assets/images/satelit.png" width="100" height="100"/>
+                                <img onClick={this.location='wfs'} border="0" alt="Satelit" src="assets/images/satelit.png" width="100" height="100"/>
                                     <span className="caption">Satelit</span>                                
                             </a>
                         </center>
@@ -147,7 +148,7 @@ class HeaderHome extends Component {
                     </Form>
                 </ModalBody>
             </Modal>
-            <Modal isOpen={this.state.isModalOpenAddActivity} toggle={this.toggleModalAddActivity}>
+            {/* <Modal isOpen={this.state.isModalOpenAddActivity} toggle={this.toggleModalAddActivity}>
                 <ModalHeader toggle={this.toggleModalAddActivity}>Tambah Aktivitas</ModalHeader>
                 <ModalBody>
                     <Form onSubmit={this.handleCheckin}>
@@ -164,7 +165,7 @@ class HeaderHome extends Component {
                         <Button type="submit" value="submit"color="primary" className="bg-primary right-button">Save</Button>
                     </Form>
                 </ModalBody>
-            </Modal>
+            </Modal> */}
             <Modal isOpen={this.state.isModalCheckout} toggle={this.toggleModalCheckOut}>
                 <ModalHeader  className="text-center" toggle={this.toggleModalCheckOut}>CheckOut</ModalHeader>
                 <ModalBody>
@@ -213,8 +214,8 @@ class HeaderHome extends Component {
                 <div className="container">
                     <div className="row row-header">
                         <div className="col-12 col-sm-6">
-                            <h1>Ristorance Con Fusion</h1>
-                            <p>We take inspiration from the World's best cuisines, and create a unique fusion experience. Our lipsmacking creations will tickle your culinary senses!</p>
+                            <h1>Welcome Back</h1>
+                            <p>Stay connected with your coworkers within TelkomGroup.</p>
                         </div>
                     </div>
                 </div>

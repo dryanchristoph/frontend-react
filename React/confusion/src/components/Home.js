@@ -1,10 +1,10 @@
 import React from 'react';
-import { Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle} from 'reactstrap';
-import HeaderHome from './header-home';
+/* import { Card, CardImg, CardText, CardBody,
+    CardTitle, CardSubtitle} from 'reactstrap'; */
+import HeaderHome from './Header-home';
 
 
-function Home(props) {
+function Home() {
     return(
         <HeaderHome>
         </HeaderHome>
@@ -12,4 +12,5 @@ function Home(props) {
     );
 }
 
-export default Home;
+//export default Home;
+export { Home }
