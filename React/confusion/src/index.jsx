@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.css';
 import 'bootstrap-social/bootstrap-social.css';
 import './App.css';
+import './Posts.css';
 import './index.css';
 import { store } from './helpers';
 import { App } from './App';
